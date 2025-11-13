@@ -96,6 +96,11 @@ function handlePositiveClick(row: any) {
     });
 }
 
+// const formData = reactive({
+//   dictName: '',
+//   dictType: '',
+// });
+
 interface RowType {
   id: string;
   dictName: string;
@@ -108,31 +113,41 @@ interface RowType {
 }
 
 const formOptions: VbenFormProps = {
-  collapsed: false,
-  wrapperClass: 'grid-cols-5',
+  wrapperClass: 'grid-cols-3',
+  showCollapseButton: false,
   compact: true,
+  actionLayout: 'inline',
+  actionPosition: 'right',
   commonConfig: {
-    labelWidth: 10,
+    hideLabel: true,
+    labelWidth: 1,
   },
   schema: [
     {
       component: 'Input',
       componentProps: {
         placeholder: '字典名称',
+        size: 'small',
+        clearable: true,
       },
-      fieldName: 'category',
+      fieldName: 'dictName',
     },
     {
       component: 'Input',
       componentProps: {
         placeholder: '字典类型',
+        size: 'small',
+        clearable: true,
       },
-      fieldName: 'productName',
+      fieldName: 'dictType',
     },
   ],
-  showCollapseButton: true,
   submitButtonOptions: {
     content: '查询',
+    size: 'small',
+  } as any,
+  resetButtonOptions: {
+    show: false,
   },
   submitOnChange: false,
   submitOnEnter: false,
@@ -213,10 +228,13 @@ const gridOptions: VxeGridProps<RowType> = {
   },
   proxyConfig: {
     ajax: {
-      query: async ({ page }) => {
+      query: async ({ page }, formValues) => {
+        message.success(`Query params: ${JSON.stringify(formValues)}`);
+
         return await getDictTypeList({
           page: page.currentPage,
           pageSize: page.pageSize,
+          ...formValues,
         });
       },
     },

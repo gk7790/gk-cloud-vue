@@ -7,10 +7,16 @@
   >
     <NDrawerContent :title="`修改字典 - ${data?.dictName || '-'}`" closable>
       <Grid>
-        <template #action>
+        <template #action="{ row }">
           <NSpace justify="center">
             <NButton text type="info">编辑</NButton>
-            <NButton text type="error">删除</NButton>
+            <NPopconfirm @positive-click="handlePositiveClick(row)">
+              <template #trigger>
+                <NButton text type="error"> 删除 </NButton>
+              </template>
+              {{ $t('ui.actionMessage.deleteConfirm', [row.dictLabel]) }}
+              是否要删除
+            </NPopconfirm>
           </NSpace>
         </template>
       </Grid>
@@ -24,7 +30,14 @@ import type { VxeGridProps } from '#/adapter/vxe-table';
 
 import { reactive, ref, watch } from 'vue';
 
-import { NButton, NDrawer, NDrawerContent, NSpace } from 'naive-ui';
+import {
+  NButton,
+  NDrawer,
+  NDrawerContent,
+  NPopconfirm,
+  NSpace,
+  useMessage,
+} from 'naive-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 
@@ -34,16 +47,16 @@ const props = defineProps<{
   data: null | Record<string, any>;
   visible: boolean;
 }>();
-
 const emit = defineEmits<{
   (e: 'update:visible', value: boolean): void;
   (e: 'success'): void;
 }>();
-
+const message = useMessage();
 // 内部可控状态，避免直接修改 props
 const internalVisible = ref(props.visible);
 
 const form = reactive({
+  id: '',
   dictName: '',
   dictType: '',
 });
@@ -66,21 +79,17 @@ watch(
   () => internalVisible.value,
   (val) => {
     if (val && props.data) {
-      form.dictName = props.data.dictName || '';
-      form.dictType = props.data.dictType || '';
+      form.id = props.data.id || '';
     }
   },
 );
 
-// 提交修改
-function onSubmit() {
-  // TODO: 调用接口保存
-  emit('success'); // 通知父组件刷新 Table
-  emit('update:visible', false); // 关闭 Drawer
+function handlePositiveClick(row: any) {
+  message.success(`$t('ui.actionMessage.deleteSuccess')`);
 }
 
 const formOptions: VbenFormProps = {
-  collapsed: false,
+  showCollapseButton: false,
   wrapperClass: 'grid-cols-3  !mb-0 !border-0',
   compact: true,
   actionLayout: 'inline',
@@ -92,31 +101,36 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       componentProps: {
-        placeholder: '字典名称',
+        placeholder: '字典值',
         size: 'small',
         clearable: true,
       },
-      fieldName: 'category',
+      fieldName: 'dictValue',
     },
     {
       component: 'Input',
       componentProps: {
-        placeholder: '字典类型',
+        placeholder: '字典标签',
         size: 'small',
         clearable: true,
       },
-      fieldName: 'productName',
+      fieldName: 'dictLabel',
     },
   ],
   submitButtonOptions: {
     content: '查询',
+    size: 'small',
+  } as any,
+  resetButtonOptions: {
+    show: false,
   },
   submitOnChange: false,
   submitOnEnter: false,
 };
 
 interface RowType {
-  dictName: string;
+  id: string;
+  dictLabel: string;
   dictType: string;
 }
 
@@ -166,11 +180,12 @@ const gridOptions: VxeGridProps<RowType> = {
   },
   proxyConfig: {
     ajax: {
-      query: async ({ page }) => {
+      query: async ({ page }, formValues) => {
         return await getDictDataList({
           page: page.currentPage,
           pageSize: page.pageSize,
-          dictTypeId: '1894320809411260417',
+          dictTypeId: form.id,
+          ...formValues,
         });
       },
     },

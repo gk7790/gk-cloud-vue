@@ -1,3 +1,11 @@
+<template>
+  <AuthenticationLogin
+    :form-schema="formSchema"
+    :loading="authStore.loginLoading"
+    @submit="authStore.authLogin"
+  />
+</template>
+
 <script lang="ts" setup>
 import type { VbenFormSchema } from '@vben/common-ui';
 import type { BasicOption } from '@vben/types';
@@ -42,7 +50,7 @@ const formSchema = computed((): VbenFormSchema[] => {
         .string()
         .min(1, { message: $t('authentication.selectAccount') })
         .optional()
-        .default('vben'),
+        .default('admin'),
     },
     {
       component: 'VbenInput',
@@ -88,11 +96,3 @@ const formSchema = computed((): VbenFormSchema[] => {
   ];
 });
 </script>
-
-<template>
-  <AuthenticationLogin
-    :form-schema="formSchema"
-    :loading="authStore.loginLoading"
-    @submit="authStore.authLogin"
-  />
-</template>
