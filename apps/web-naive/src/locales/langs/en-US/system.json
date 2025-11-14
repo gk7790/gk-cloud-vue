@@ -61,5 +61,15 @@
     "operation": "Operation",
     "permissions": "Permissions",
     "setPermissions": "Permissions"
+  },
+  "dict": {
+    "title": "Dict",
+    "name": "Dict Name",
+    "type": "Dict Type",
+    "sort": "Sort",
+    "createTime": "Create Time",
+    "operation": "Operation",
+    "remark": "Remark",
+    "status": "Status"
   }
 }

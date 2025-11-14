@@ -63,5 +63,15 @@
     "operation": "操作",
     "permissions": "权限",
     "setPermissions": "授权"
+  },
+  "dict": {
+    "title": "字典",
+    "name": "字典名称",
+    "type": "字典类型",
+    "sort": "排序",
+    "createTime": "创建时间",
+    "operation": "操作",
+    "remark": "备注",
+    "status": "状态"
   }
 }

@@ -4,22 +4,30 @@ import { requestClient } from '#/api/request';
 
 export namespace SysDictApi {
   export interface SysDictType {
-    [key: string]: any;
     id: string;
-    name: string;
-    permissions: string[];
+    dictType: string;
+    dictName: string;
     remark?: string;
-    status: 0 | 1;
+    sort: number;
+  }
+
+  export interface SysDictData {
+    id: string;
+    dictTypeId: string;
+    dictValue: string;
+    dictLabel: string;
+    attrType: string;
+    remark?: string;
+    status: number;
+    sort: number;
   }
 }
 
-export { deleteDictType, getDictDataList, getDictType, getDictTypeList };
-
 /**
  * 获取字典列表数据
  * sys/dict/type/page
  */
-async function getDictTypeList(params: Recordable<any>) {
+export async function getDictTypeList(params: Recordable<any>) {
   return requestClient.get<Array<SysDictApi.SysDictType>>(
     '/sys/dict/type/page',
     { params },
@@ -30,20 +38,24 @@ async function getDictTypeList(params: Recordable<any>) {
  * 获取字典列表数据
  * sys/dict/type/page
  */
-async function getDictType(params: Recordable<any>) {
-  return requestClient.get<Array<SysDictApi.SysDictType>>(
-    '/sys/dict/type/page',
-    { params },
-  );
+export async function postDictType(body: any | SysDictApi.SysDictData) {
+  return requestClient.post<any>('/sys/dict/type', body);
+}
+
+/**
+ * 获取字典列表数据
+ * sys/dict/type/page
+ */
+export async function putDictType(body: SysDictApi.SysDictData) {
+  return requestClient.put<any>('/sys/dict/type', body);
 }
 
 /**
  * 删除
  * @param params
- * @returns
  */
-async function deleteDictType(params: Recordable<any>) {
-  return requestClient.delete<any>('sys/dict/data', {
+export async function deleteDictType(params: Recordable<any>) {
+  return requestClient.delete<any>('sys/dict/type', {
     params,
   });
 }
@@ -52,9 +64,36 @@ async function deleteDictType(params: Recordable<any>) {
  * 获取字典列表数据
  * sys/dict/type/page
  */
-async function getDictDataList(params: Recordable<any>) {
+export async function getDictDataList(params: Recordable<any>) {
   return requestClient.get<Array<SysDictApi.SysDictType>>(
     'sys/dict/data/page',
     { params },
   );
+}
+
+/**
+ * 获取字典列表数据
+ * sys/dict/type/page
+ */
+export async function postDictData(body: any | SysDictApi.SysDictData) {
+  return requestClient.post<any>('/sys/dict/data', body);
+}
+
+/**
+ * 获取字典列表数据
+ * sys/dict/type/page
+ */
+export async function putDictData(body: SysDictApi.SysDictData) {
+  return requestClient.put<any>('/sys/dict/data', body);
+}
+
+/**
+ * 删除
+ * @param params
+ * @returns
+ */
+export async function deleteDictData(params: Recordable<any>) {
+  return requestClient.delete<any>('sys/dict/data', {
+    params,
+  });
 }

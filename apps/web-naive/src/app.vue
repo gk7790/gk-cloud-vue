@@ -1,3 +1,21 @@
+<template>
+  <NConfigProvider
+    :date-locale="tokenDateLocale"
+    :locale="tokenLocale"
+    :theme="tokenTheme"
+    :theme-overrides="themeOverrides"
+    class="h-full"
+  >
+    <NNotificationProvider>
+      <NMessageProvider>
+        <NDialogProvider>
+          <RouterView />
+        </NDialogProvider>
+      </NMessageProvider>
+    </NNotificationProvider>
+  </NConfigProvider>
+</template>
+
 <script lang="ts" setup>
 import type { GlobalThemeOverrides } from 'naive-ui';
 
@@ -13,6 +31,7 @@ import {
   enUS,
   lightTheme,
   NConfigProvider,
+  NDialogProvider,
   NMessageProvider,
   NNotificationProvider,
   zhCN,
@@ -38,19 +57,3 @@ const themeOverrides = computed((): GlobalThemeOverrides => {
   };
 });
 </script>
-
-<template>
-  <NConfigProvider
-    :date-locale="tokenDateLocale"
-    :locale="tokenLocale"
-    :theme="tokenTheme"
-    :theme-overrides="themeOverrides"
-    class="h-full"
-  >
-    <NNotificationProvider>
-      <NMessageProvider>
-        <RouterView />
-      </NMessageProvider>
-    </NNotificationProvider>
-  </NConfigProvider>
-</template>

@@ -1,34 +1,40 @@
 <template>
-  <NDrawer
-    v-model:show="internalVisible"
-    :default-width="800"
-    resizable
-    :mask-closable="false"
-  >
-    <NDrawerContent :title="`修改字典 - ${data?.dictName || '-'}`" closable>
-      <Grid>
-        <template #action="{ row }">
-          <NSpace justify="center">
-            <NButton text type="info">编辑</NButton>
-            <NPopconfirm @positive-click="handlePositiveClick(row)">
-              <template #trigger>
-                <NButton text type="error"> 删除 </NButton>
-              </template>
-              {{ $t('ui.actionMessage.deleteConfirm', [row.dictLabel]) }}
-              是否要删除
-            </NPopconfirm>
-          </NSpace>
-        </template>
-      </Grid>
-    </NDrawerContent>
-  </NDrawer>
+  <div>
+    <NDrawer v-model:show="internalVisible" :default-width="800" resizable>
+      <NDrawerContent :title="`修改字典 - ${data?.dictName || '-'}`" closable>
+        <Grid>
+          <!-- ✅ 工具栏插槽 -->
+          <template #toolbarButtons>
+            <NButton type="primary" size="small" @click="handleAdd">
+              新增
+            </NButton>
+          </template>
+          <template #action="{ row }">
+            <NSpace justify="center">
+              <NButton text type="info" @click="onEdit(row)">编辑</NButton>
+              <NPopconfirm @positive-click="handlePositiveClick(row)">
+                <template #trigger>
+                  <NButton text type="error"> 删除 </NButton>
+                </template>
+                {{ $t('ui.actionMessage.deleteConfirm', [row.dictLabel]) }}
+                是否要删除
+              </NPopconfirm>
+            </NSpace>
+          </template>
+        </Grid>
+      </NDrawerContent>
+    </NDrawer>
+    <!-- 引入 Drawer 组件 -->
+  </div>
 </template>
 
 <script lang="ts" setup>
+import type { SysDictApi } from '../api';
+
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
-import { reactive, ref, watch } from 'vue';
+import { h, reactive, ref, watch } from 'vue';
 
 import {
   NButton,
@@ -36,22 +42,98 @@ import {
   NDrawerContent,
   NPopconfirm,
   NSpace,
+  useDialog,
   useMessage,
 } from 'naive-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { $t } from '#/locales';
 
-import { getDictDataList } from '../api';
+import {
+  deleteDictData,
+  getDictDataList,
+  postDictData,
+  putDictData,
+} from '../api';
+import ConfigFrom from './cFrom.vue';
 
 const props = defineProps<{
-  data: null | Record<string, any>;
+  data: any | SysDictApi.SysDictType;
   visible: boolean;
 }>();
 const emit = defineEmits<{
   (e: 'update:visible', value: boolean): void;
   (e: 'success'): void;
 }>();
+
 const message = useMessage();
+const dialog = useDialog();
+
+function handleAdd() {
+  const formData: any = ref({
+    dictTypeId: props.data.id,
+  });
+  let formInstance: any = null;
+  dialog.create({
+    title: $t('ui.actionTitle.create'),
+    showIcon: false,
+    content: () =>
+      h(ConfigFrom, {
+        modelValue: formData.value,
+        'onUpdate:modelValue': (value) => {
+          formData.value = value;
+        },
+        ref: (el) => (formInstance = el),
+      }),
+    positiveText: $t('common.confirm'),
+    negativeText: $t('common.cancel'),
+    onPositiveClick: async () => {
+      try {
+        // 进行表单校验
+        await formInstance?.validate();
+        await postDictData(formData.value).then(() => {
+          gridApi.query();
+        });
+        return true;
+      } catch {
+        return false;
+      }
+    },
+  });
+}
+
+function onEdit(row: SysDictApi.SysDictData) {
+  const formData: any = ref({ ...row });
+  let formInstance: any = null;
+
+  dialog.create({
+    title: $t('ui.actionTitle.edit', [row.dictLabel || '']),
+    showIcon: false,
+    content: () =>
+      h(ConfigFrom, {
+        modelValue: formData.value,
+        'onUpdate:modelValue': (value) => {
+          formData.value = value;
+        },
+        ref: (el) => (formInstance = el),
+      }),
+    positiveText: $t('common.confirm'),
+    negativeText: $t('common.cancel'),
+    onPositiveClick: async () => {
+      try {
+        // 进行表单校验
+        await formInstance?.validate();
+        putDictData(formData.value).then(() => {
+          gridApi.query();
+        });
+        return true;
+      } catch {
+        return false;
+      }
+    },
+  });
+}
+
 // 内部可控状态，避免直接修改 props
 const internalVisible = ref(props.visible);
 
@@ -85,7 +167,10 @@ watch(
 );
 
 function handlePositiveClick(row: any) {
-  message.success(`$t('ui.actionMessage.deleteSuccess')`);
+  deleteDictData({ ids: row.id }).then(() => {
+    message.success($t('ui.actionMessage.deleteSuccess', [row.dictLabel]));
+    gridApi.query();
+  });
 }
 
 const formOptions: VbenFormProps = {
@@ -128,14 +213,8 @@ const formOptions: VbenFormProps = {
   submitOnEnter: false,
 };
 
-interface RowType {
-  id: string;
-  dictLabel: string;
-  dictType: string;
-}
-
 // 关键配置：确保启用了行右键事件
-const gridOptions: VxeGridProps<RowType> = {
+const gridOptions: VxeGridProps<SysDictApi.SysDictData> = {
   height: 'auto',
   rowConfig: {
     isHover: true,
@@ -190,7 +269,14 @@ const gridOptions: VxeGridProps<RowType> = {
       },
     },
   },
+  // ✅ 新增 toolbarConfig
+  toolbarConfig: {
+    slots: {
+      // 自定义工具栏左侧插槽
+      buttons: 'toolbarButtons',
+    },
+  },
 };
 
-const [Grid] = useVbenVxeGrid({ formOptions, gridOptions });
+const [Grid, gridApi] = useVbenVxeGrid({ formOptions, gridOptions });
 </script>

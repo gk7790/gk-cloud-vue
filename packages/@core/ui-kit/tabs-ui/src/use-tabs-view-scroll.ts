@@ -50,7 +50,7 @@ export function useTabsViewScroll(props: TabsProps) {
     });
   }
 
-  async function initScrollbar() {
+  async function initScrollbar(retryCount = 0) {
     await nextTick();
 
     const scrollbarEl = scrollbarRef.value?.$el;
@@ -61,6 +61,13 @@ export function useTabsViewScroll(props: TabsProps) {
     const viewportEl = scrollbarEl?.querySelector(
       'div[data-radix-scroll-area-viewport]',
     );
+
+    if (!(viewportEl instanceof Element)) {
+      if (retryCount < 5) {
+        setTimeout(() => initScrollbar(retryCount + 1), 100);
+      }
+      return;
+    }
 
     scrollViewportEl.value = viewportEl;
     calcShowScrollbarButton();
