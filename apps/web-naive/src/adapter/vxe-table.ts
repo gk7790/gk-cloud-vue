@@ -1,10 +1,14 @@
 import type { VxeTableGridOptions } from '@vben/plugins/vxe-table';
+import type { Recordable } from '@vben/types';
 
 import { h } from 'vue';
 
 import { setupVbenVxeTable, useVbenVxeGrid } from '@vben/plugins/vxe-table';
+import { get } from '@vben/utils';
 
-import { NButton, NImage } from 'naive-ui';
+import { NButton, NImage, NTag } from 'naive-ui';
+
+import { $t } from '#/locales';
 
 import { useVbenForm } from './form';
 
@@ -58,6 +62,30 @@ setupVbenVxeTable({
       },
     });
 
+    vxeUI.renderer.add('CellTag', {
+      renderTableDefault({ options, props }, { column, row }) {
+        const value = get(row, column.field);
+        const tagOptions = options ?? [
+          { type: 'success', label: $t('common.enabled'), value: 1 },
+          { type: 'warning', label: $t('common.suspend'), value: 2 },
+          { type: 'error', label: $t('common.disabled'), value: 3 },
+        ];
+        const tagItem = tagOptions.find((item) => item.value === value);
+
+        return h(
+          NTag,
+          {
+            ...props,
+            type: tagItem?.type,
+            size: 'small',
+            round: false,
+            bordered: false,
+            style: { borderRadius: '6px', ...props?.style },
+          },
+          { default: () => tagItem?.label ?? value },
+        );
+      },
+    });
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
     // vxeUI.formats.add
   },
@@ -65,5 +93,14 @@ setupVbenVxeTable({
 });
 
 export { useVbenVxeGrid };
+
+export type OnActionClickParams<T = Recordable<any>> = {
+  code: string;
+  row: T;
+};
+
+export type OnActionClickFn<T = Recordable<any>> = (
+  params: OnActionClickParams<T>,
+) => void;
 
 export type * from '@vben/plugins/vxe-table';

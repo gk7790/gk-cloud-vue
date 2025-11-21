@@ -1,29 +1,28 @@
-import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { SystemMenuApi } from '#/api/system/menu';
+import type { SysMenuApi } from './api';
+
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { $t } from '#/locales';
 
 export function getMenuTypeOptions() {
   return [
     {
-      color: 'processing',
+      type: 'info',
       label: $t('system.menu.typeCatalog'),
       value: 'catalog',
     },
-    { color: 'default', label: $t('system.menu.typeMenu'), value: 'menu' },
-    { color: 'error', label: $t('system.menu.typeButton'), value: 'button' },
+    { type: 'default', label: $t('system.menu.typeMenu'), value: 'menu' },
+    { type: 'error', label: $t('system.menu.typeButton'), value: 'button' },
     {
-      color: 'success',
+      type: 'success',
       label: $t('system.menu.typeEmbedded'),
       value: 'embedded',
     },
-    { color: 'warning', label: $t('system.menu.typeLink'), value: 'link' },
+    { type: 'warning', label: $t('system.menu.typeLink'), value: 'link' },
   ];
 }
 
-export function useColumns(
-  onActionClick: OnActionClickFn<SystemMenuApi.SystemMenu>,
-): VxeTableGridOptions<SystemMenuApi.SystemMenu>['columns'] {
+export function useColumns(): VxeTableGridOptions<SysMenuApi.SysMenu>['columns'] {
   return [
     {
       align: 'left',
@@ -80,26 +79,10 @@ export function useColumns(
       title: $t('system.menu.status'),
       width: 100,
     },
-
     {
       align: 'right',
-      cellRender: {
-        attrs: {
-          nameField: 'name',
-          onClick: onActionClick,
-        },
-        name: 'CellOperation',
-        options: [
-          {
-            code: 'append',
-            text: '新增下级',
-          },
-          'edit', // 默认的编辑按钮
-          'delete', // 默认的删除按钮
-        ],
-      },
-      field: 'operation',
       fixed: 'right',
+      slots: { default: 'action' },
       headerAlign: 'center',
       showOverflow: false,
       title: $t('system.menu.operation'),

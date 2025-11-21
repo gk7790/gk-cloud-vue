@@ -3,14 +3,19 @@
     <Grid>
       <template #action="{ row }">
         <NSpace justify="center">
-          <NButton text type="info" @click="onConfig(row)">配置</NButton>
-          <NButton text type="info" @click="onEdit(row)">编辑</NButton>
+          <NButton text type="info" @click="onConfig(row)">
+            {{ $t('common.config') }}
+          </NButton>
+          <NButton text type="info" @click="onEdit(row)">
+            {{ $t('common.edit') }}
+          </NButton>
           <NPopconfirm @positive-click="handlePositiveClick(row)">
             <template #trigger>
-              <NButton text type="error"> 删除 </NButton>
+              <NButton text type="error">
+                {{ $t('common.delete') }}
+              </NButton>
             </template>
             {{ $t('ui.actionMessage.deleteConfirm', [row.dictName]) }}
-            是否要删除
           </NPopconfirm>
         </NSpace>
       </template>

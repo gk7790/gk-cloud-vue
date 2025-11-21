@@ -13,19 +13,19 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         meta: {
-          title: '角色管理',
+          title: '部门管理',
         },
-        name: 'Role',
-        path: '/sys/role',
-        component: () => import('#/views/system/role/list.vue'),
+        name: 'Dept',
+        path: '/sys/dept',
+        component: () => import('#/views/system/dept/list.vue'),
       },
       {
         meta: {
-          title: '用户管理',
+          title: '租户管理',
         },
-        name: 'User',
-        path: '/sys/user',
-        component: () => import('#/views/system/user/index.vue'),
+        name: 'Tenant',
+        path: '/sys/tenant',
+        component: () => import('#/views/system/tenant/list.vue'),
       },
       {
         meta: {
@@ -42,6 +42,14 @@ const routes: RouteRecordRaw[] = [
         name: 'Dict',
         path: '/sys/dict',
         component: () => import('#/views/system/dict/index.vue'),
+      },
+      {
+        meta: {
+          title: '系统参数',
+        },
+        name: 'Params',
+        path: '/sys/params',
+        component: () => import('#/views/system/params/index.vue'),
       },
     ],
   },

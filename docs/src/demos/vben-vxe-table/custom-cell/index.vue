@@ -1,3 +1,22 @@
+<template>
+  <div class="vp-raw w-full">
+    <Grid>
+      <template #image-url="{ row }">
+        <Image :src="row.imageUrl" height="30" width="30" />
+      </template>
+      <template #open="{ row }">
+        <Switch v-model="row.open" />
+      </template>
+      <template #status="{ row }">
+        <Tag :color="row.color">{{ row.status }}</Tag>
+      </template>
+      <template #action>
+        <Button type="link">编辑</Button>
+      </template>
+    </Grid>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
@@ -84,22 +103,3 @@ const gridOptions: VxeGridProps<RowType> = {
 
 const [Grid] = useVbenVxeGrid({ gridOptions });
 </script>
-
-<template>
-  <div class="vp-raw w-full">
-    <Grid>
-      <template #image-url="{ row }">
-        <Image :src="row.imageUrl" height="30" width="30" />
-      </template>
-      <template #open="{ row }">
-        <Switch v-model="row.open" />
-      </template>
-      <template #status="{ row }">
-        <Tag :color="row.color">{{ row.status }}</Tag>
-      </template>
-      <template #action>
-        <Button type="link">编辑</Button>
-      </template>
-    </Grid>
-  </div>
-</template>

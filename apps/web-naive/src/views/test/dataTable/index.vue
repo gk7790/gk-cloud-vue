@@ -1,134 +1,111 @@
-<script lang="ts" setup>
-import type { VbenFormProps } from '#/adapter/form';
-import type { VxeGridProps } from '#/adapter/vxe-table';
+<template>
+  <NCard :bordered="true" style="max-width: 500px">
+    <NSpace justify="left">
+      <NCheckbox @update:checked="handleCheckedChange" />
+      <!-- 展开/收起 切换按钮 + 图标 -->
+      <NButton size="tiny" type="primary" text @click="toggleExpand">
+        <div class="flex items-center gap-1">
+          <span>{{
+            isExpandedAll ? $t('system.collapse') : $t('system.expand')
+          }}</span>
+          <ChevronDown
+            class="size-4 transition-transform duration-200"
+            :style="{
+              transform: isExpandedAll ? 'rotate(180deg)' : 'rotate(0deg)',
+            }"
+          />
+        </div>
+      </NButton>
+    </NSpace>
+    <NDivider />
+    <NTree
+      block-line
+      checkable
+      cascade
+      :data="treeData"
+      :checked-keys="checkedKeys"
+      :expanded-keys="expandedKeys"
+      @update:checked-keys="handleCheck"
+      @update:expanded-keys="handleExpand"
+    />
+  </NCard>
+</template>
 
-import { Page } from '@vben/common-ui';
+<script setup>
+import { computed, ref } from 'vue';
 
-import { useMessage } from 'naive-ui';
+import { ChevronDown } from '@vben/icons';
 
-import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { NButton, NCard, NCheckbox, NDivider, NSpace, NTree } from 'naive-ui';
 
-const message = useMessage();
+/** ---------- Tree 数据 ---------- */
+const treeData = [
+  {
+    label: '菜单 1',
+    key: '1',
+    children: [
+      {
+        label: '菜单 1-1',
+        key: '1-1',
+      },
+      {
+        label: '菜单 1-2',
+        key: '1-2',
+        children: [
+          { label: '菜单 1-2-1', key: '1-2-1' },
+          { label: '菜单 1-2-2', key: '1-2-2' },
+        ],
+      },
+    ],
+  },
+  {
+    label: '菜单 2',
+    key: '2',
+    children: [{ label: '菜单 2-1', key: '2-1' }],
+  },
+];
 
-interface RowType {
-  category: string;
-  color: string;
-  id: string;
-  price: string;
-  productName: string;
-  releaseDate: string;
+/** ---------- 多选（受控） ---------- */
+const checkedKeys = ref([]);
+
+/** ---------- 展开状态（受控） ---------- */
+const expandedKeys = ref([]);
+
+/** ---------- 多选更新 ---------- */
+function handleCheck(keys) {
+  checkedKeys.value = keys;
 }
 
-const formOptions: VbenFormProps = {
-  // 默认展开
-  collapsed: false,
-  schema: [
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: 'Please enter category',
-      },
-      defaultValue: '1',
-      fieldName: 'category',
-      label: 'Category',
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: 'Please enter productName',
-      },
-      fieldName: 'productName',
-      label: 'ProductName',
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: 'Please enter price',
-      },
-      fieldName: 'price',
-      label: 'Price',
-    },
-    {
-      component: 'Select',
-      componentProps: {
-        allowClear: true,
-        options: [
-          {
-            label: 'Color1',
-            value: '1',
-          },
-          {
-            label: 'Color2',
-            value: '2',
-          },
-        ],
-        placeholder: '请选择',
-      },
-      fieldName: 'color',
-      label: 'Color',
-    },
-    {
-      component: 'DatePicker',
-      fieldName: 'datePicker',
-      label: 'Date',
-    },
-  ],
-  // 控制表单是否显示折叠按钮
-  showCollapseButton: true,
-  submitButtonOptions: {
-    content: '查询',
-  },
-  // 是否在字段值改变时提交表单
-  submitOnChange: false,
-  // 按下回车时是否提交表单
-  submitOnEnter: false,
-};
+/** ---------- 展开更新 ---------- */
+function handleExpand(keys) {
+  expandedKeys.value = keys;
+}
 
-const gridOptions: VxeGridProps<RowType> = {
-  checkboxConfig: {
-    highlight: true,
-    labelField: 'name',
-  },
-  columns: [
-    { title: '序号', type: 'seq', width: 50 },
-    { align: 'left', title: 'Name', type: 'checkbox', width: 100 },
-    { field: 'category', title: 'Category' },
-    { field: 'color', title: 'Color' },
-    { field: 'productName', title: 'Product Name' },
-    { field: 'price', title: 'Price' },
-    { field: 'releaseDate', formatter: 'formatDateTime', title: 'Date' },
-  ],
-  keepSource: true,
-  pagerConfig: {},
-  // proxyConfig: {
-  //   ajax: {
-  //     query: async ({ page }, formValues) => {
-  //       message.success(`Query params: ${JSON.stringify(formValues)}`);
-  //       return await getExampleTableApi({
-  //         page: page.currentPage,
-  //         pageSize: page.pageSize,
-  //         ...formValues,
-  //       });
-  //     },
-  //   },
-  // },
-  toolbarConfig: {
-    // 是否显示搜索表单控制按钮
-    // @ts-ignore 正式环境时有完整的类型声明
-    search: true,
-  },
-  treeConfig: {
-    parentField: 'parentId',
-    rowField: 'id',
-    transform: true,
-  },
-};
+/** ---------- 全选处理 ---------- */
+function getAllNodeKeys(nodes) {
+  const keys = [];
+  const dfs = (list) => {
+    list.forEach((n) => {
+      keys.push(n.key);
+      if (n.children) dfs(n.children);
+    });
+  };
+  dfs(nodes);
+  return keys;
+}
 
-const [Grid] = useVbenVxeGrid({ formOptions, gridOptions });
+const allKeys = getAllNodeKeys(treeData);
+
+function handleCheckedChange(checked) {
+  checkedKeys.value = checked ? [...allKeys] : [];
+}
+
+/** *************** 展开/收起 切换逻辑 */
+const isExpandedAll = computed(
+  () => expandedKeys.value.length === allKeys.length,
+);
+
+function toggleExpand() {
+  expandedKeys.value = isExpandedAll.value ? [] : [...allKeys];
+}
 </script>
-
-<template>
-  <Page>
-    <Grid />
-  </Page>
-</template>

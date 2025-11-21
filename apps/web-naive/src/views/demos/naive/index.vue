@@ -1,3 +1,37 @@
+<template>
+  <Page description="支持多语言，主题功能集成切换等" title="naive组件使用演示">
+    <NCard class="mb-5" title="按钮">
+      <NSpace>
+        <NButton>Default</NButton>
+        <NButton type="tertiary"> Tertiary </NButton>
+        <NButton type="primary"> Primary </NButton>
+        <NButton type="info"> Info </NButton>
+        <NButton type="success"> Success </NButton>
+        <NButton type="warning"> Warning </NButton>
+        <NButton type="error"> Error </NButton>
+      </NSpace>
+    </NCard>
+
+    <NCard class="mb-5" title="Message">
+      <NSpace>
+        <NButton type="error" @click="error"> 错误 </NButton>
+        <NButton type="warning" @click="warning"> 警告 </NButton>
+        <NButton type="success" @click="success"> 成功 </NButton>
+        <NButton type="primary" @click="loading"> 加载中 </NButton>
+      </NSpace>
+    </NCard>
+
+    <NCard class="mb-5" title="Notification">
+      <NSpace>
+        <NButton type="error" @click="notify('error')"> 错误 </NButton>
+        <NButton type="warning" @click="notify('warning')"> 警告 </NButton>
+        <NButton type="success" @click="notify('success')"> 成功 </NButton>
+        <NButton type="primary" @click="notify('info')"> 加载中 </NButton>
+      </NSpace>
+    </NCard>
+  </Page>
+</template>
+
 <script lang="ts" setup>
 import type { NotificationType } from 'naive-ui';
 
@@ -33,37 +67,3 @@ function notify(type: NotificationType) {
   });
 }
 </script>
-
-<template>
-  <Page description="支持多语言，主题功能集成切换等" title="naive组件使用演示">
-    <NCard class="mb-5" title="按钮">
-      <NSpace>
-        <NButton>Default</NButton>
-        <NButton type="tertiary"> Tertiary </NButton>
-        <NButton type="primary"> Primary </NButton>
-        <NButton type="info"> Info </NButton>
-        <NButton type="success"> Success </NButton>
-        <NButton type="warning"> Warning </NButton>
-        <NButton type="error"> Error </NButton>
-      </NSpace>
-    </NCard>
-
-    <NCard class="mb-5" title="Message">
-      <NSpace>
-        <NButton type="error" @click="error"> 错误 </NButton>
-        <NButton type="warning" @click="warning"> 警告 </NButton>
-        <NButton type="success" @click="success"> 成功 </NButton>
-        <NButton type="primary" @click="loading"> 加载中 </NButton>
-      </NSpace>
-    </NCard>
-
-    <NCard class="mb-5" title="Notification">
-      <NSpace>
-        <NButton type="error" @click="notify('error')"> 错误 </NButton>
-        <NButton type="warning" @click="notify('warning')"> 警告 </NButton>
-        <NButton type="success" @click="notify('success')"> 成功 </NButton>
-        <NButton type="primary" @click="notify('info')"> 加载中 </NButton>
-      </NSpace>
-    </NCard>
-  </Page>
-</template>

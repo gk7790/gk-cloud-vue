@@ -1,3 +1,8 @@
+<template>
+  <Modal>
+    <Form />
+  </Modal>
+</template>
 <script lang="ts" setup>
 import { useVbenModal } from '@vben/common-ui';
 
@@ -64,8 +69,3 @@ const [Modal, modalApi] = useVbenModal({
   title: '内嵌表单示例',
 });
 </script>
-<template>
-  <Modal>
-    <Form />
-  </Modal>
-</template>

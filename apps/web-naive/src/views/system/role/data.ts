@@ -1,6 +1,5 @@
 import type { VbenFormSchema } from '#/adapter/form';
-import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { SystemRoleApi } from '#/api/system/role';
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { $t } from '#/locales';
 
@@ -15,12 +14,15 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'RadioGroup',
       componentProps: {
+        isButton: true,
         buttonStyle: 'solid',
         options: [
           { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
+          { label: $t('common.suspend'), value: 2 },
+          { label: $t('common.disabled'), value: 3 },
         ],
         optionType: 'button',
+        class: `[&_.n-radio-button]:py-1`,
       },
       defaultValue: 1,
       fieldName: 'status',
@@ -33,10 +35,45 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       component: 'Input',
-      fieldName: 'permissions',
+      fieldName: 'menuIdList',
       formItemClass: 'items-start',
-      label: $t('system.role.setPermissions'),
+      label: $t('system.role.permitMenu'),
       modelPropName: 'modelValue',
+    },
+    {
+      component: 'Input',
+      fieldName: 'deptIdList',
+      formItemClass: 'items-start',
+      label: $t('system.role.permitDept'),
+      modelPropName: 'modelValue',
+    },
+  ];
+}
+
+/** 分配菜单的表单 */
+export function useAssignMenuFormSchema(): VbenFormSchema[] {
+  return [
+    {
+      fieldName: 'id',
+      component: 'Input',
+      dependencies: {
+        triggerFields: [''],
+        show: () => false,
+      },
+    },
+    {
+      fieldName: 'name',
+      label: '角色名称',
+      component: 'Input',
+      componentProps: {
+        disabled: true,
+      },
+    },
+    {
+      fieldName: 'menuIdList',
+      label: '菜单权限',
+      component: 'Input',
+      formItemClass: 'items-start',
     },
   ];
 }
@@ -52,11 +89,16 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Select',
       componentProps: {
-        allowClear: true,
+        isButton: true,
+        buttonStyle: 'solid',
         options: [
           { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
+          { label: $t('common.suspend'), value: 2 },
+          { label: $t('common.disabled'), value: 3 },
         ],
+        optionType: 'button',
+        class: `[&_.n-radio-button]:py-1`,
+        clearable: true,
       },
       fieldName: 'status',
       label: $t('system.role.status'),
@@ -67,17 +109,19 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('system.role.remark'),
     },
     {
-      component: 'RangePicker',
+      component: 'DatePicker',
+      componentProps: {
+        type: 'datetimerange',
+        format: 'yyyy-MM-dd HH:mm',
+        clearable: true,
+      },
       fieldName: 'createTime',
       label: $t('system.role.createTime'),
     },
   ];
 }
 
-export function useColumns<T = SystemRoleApi.SystemRole>(
-  onActionClick: OnActionClickFn<T>,
-  onStatusChange?: (newStatus: any, row: T) => PromiseLike<boolean | undefined>,
-): VxeTableGridOptions['columns'] {
+export function useColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
@@ -87,13 +131,10 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
     {
       field: 'id',
       title: $t('system.role.id'),
-      width: 200,
+      width: 250,
     },
     {
-      cellRender: {
-        attrs: { beforeChange: onStatusChange },
-        name: onStatusChange ? 'CellSwitch' : 'CellTag',
-      },
+      cellRender: { name: 'CellTag' },
       field: 'status',
       title: $t('system.role.status'),
       width: 100,
@@ -104,20 +145,13 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
       title: $t('system.role.remark'),
     },
     {
-      field: 'createTime',
+      field: 'createdAt',
       title: $t('system.role.createTime'),
       width: 200,
     },
     {
       align: 'center',
-      cellRender: {
-        attrs: {
-          nameField: 'name',
-          nameTitle: $t('system.role.name'),
-          onClick: onActionClick,
-        },
-        name: 'CellOperation',
-      },
+      slots: { default: 'action' },
       field: 'operation',
       fixed: 'right',
       title: $t('system.role.operation'),

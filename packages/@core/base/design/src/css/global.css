@@ -158,3 +158,19 @@ html.invert-mode {
 html.grayscale-mode {
   @apply grayscale;
 }
+
+/* 按钮样式（类似 Antd Button Radio） */
+.n-radio-group .n-radio-button.n-radio {
+  border-radius: 4px;
+}
+
+.n-radio-group .n-radio-button--checked {
+  color: #fff !important;
+  background: #006be6 !important;
+  border-color: #006be6 !important;
+}
+
+.n-divider:not(.n-divider--vertical) {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
