@@ -20,7 +20,7 @@ const routes: RouteRecordRaw[] = [
       order: 9998,
       title: $t('demos.vben.title'),
     },
-    name: 'VbenProject',
+    name: 'GkProject',
     path: '/vben-admin',
     children: [
       {
