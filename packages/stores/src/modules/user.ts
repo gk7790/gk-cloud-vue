@@ -9,6 +9,10 @@ interface BasicUserInfo {
   /**
    * 用户昵称
    */
+  nickname: string;
+  /**
+   * 用户昵称
+   */
   realName: string;
   /**
    * 用户角色
