@@ -50,6 +50,7 @@
     "menuTitle": "标题",
     "name": "菜单",
     "operation": "操作",
+    "order": "排序",
     "parent": "上级菜单",
     "path": "路由地址",
     "status": "状态",

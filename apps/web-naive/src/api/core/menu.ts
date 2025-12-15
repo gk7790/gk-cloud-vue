@@ -8,3 +8,10 @@ import { requestClient } from '#/api/request';
 export async function getAllMenusApi() {
   return requestClient.get<RouteRecordStringComponent[]>('sys/menu/all');
 }
+
+/**
+ * 获取用户所有菜单
+ */
+export async function getUserMenusApi() {
+  return requestClient.get<RouteRecordStringComponent[]>('sys/menu/nav');
+}

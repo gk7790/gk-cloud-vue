@@ -9,16 +9,16 @@ export function getMenuTypeOptions() {
     {
       type: 'info',
       label: $t('system.menu.typeCatalog'),
-      value: 'catalog',
+      value: '1',
     },
-    { type: 'default', label: $t('system.menu.typeMenu'), value: 'menu' },
-    { type: 'error', label: $t('system.menu.typeButton'), value: 'button' },
+    { type: 'default', label: $t('system.menu.typeMenu'), value: '2' },
+    { type: 'error', label: $t('system.menu.typeButton'), value: '5' },
     {
       type: 'success',
       label: $t('system.menu.typeEmbedded'),
-      value: 'embedded',
+      value: '3',
     },
-    { type: 'warning', label: $t('system.menu.typeLink'), value: 'link' },
+    { type: 'warning', label: $t('system.menu.typeLink'), value: '4' },
   ];
 }
 
@@ -51,7 +51,6 @@ export function useColumns(): VxeTableGridOptions<SysMenuApi.SysMenu>['columns']
       title: $t('system.menu.path'),
       width: 200,
     },
-
     {
       align: 'left',
       field: 'component',

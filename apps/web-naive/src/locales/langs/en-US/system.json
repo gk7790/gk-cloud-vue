@@ -48,6 +48,7 @@
     "menuTitle": "Title",
     "name": "Menu",
     "operation": "Operation",
+    "order": "Order",
     "parent": "Parent Menu",
     "path": "Route Path",
     "status": "Status",
