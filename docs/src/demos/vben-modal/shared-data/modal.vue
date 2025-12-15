@@ -1,3 +1,8 @@
+<template>
+  <Modal title="数据共享示例">
+    <div class="flex-col-center">外部传递数据： {{ data }}</div>
+  </Modal>
+</template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 
@@ -19,8 +24,3 @@ const [Modal, modalApi] = useVbenModal({
   },
 });
 </script>
-<template>
-  <Modal title="数据共享示例">
-    <div class="flex-col-center">外部传递数据： {{ data }}</div>
-  </Modal>
-</template>

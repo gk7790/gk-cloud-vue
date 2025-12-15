@@ -7,7 +7,7 @@
 
 [![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
 
-  <h1>Vue Vben Admin</h1>
+  <h1>Vue GK ZAP</h1>
 </div>
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vbenjs_vue-vben-admin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vbenjs_vue-vben-admin) ![codeql](https://github.com/vbenjs/vue-vben-admin/actions/workflows/codeql.yml/badge.svg) ![build](https://github.com/vbenjs/vue-vben-admin/actions/workflows/build.yml/badge.svg) ![ci](https://github.com/vbenjs/vue-vben-admin/actions/workflows/ci.yml/badge.svg) ![deploy](https://github.com/vbenjs/vue-vben-admin/actions/workflows/deploy.yml/badge.svg)
@@ -16,7 +16,7 @@
 
 ## 紹介
 
-Vue Vben Adminは、最新の`vue3`、`vite`、`TypeScript`などの主流技術を使用して開発された、無料でオープンソースの中・後端テンプレートです。すぐに使える中・後端のフロントエンドソリューションとして、学習の参考にもなります。
+Vue GK ZAPは、最新の`vue3`、`vite`、`TypeScript`などの主流技術を使用して開発された、無料でオープンソースの中・後端テンプレートです。すぐに使える中・後端のフロントエンドソリューションとして、学習の参考にもなります。
 
 ## アップグレード通知
 
@@ -32,7 +32,7 @@ Vue Vben Adminは、最新の`vue3`、`vite`、`TypeScript`などの主流技術
 
 ## プレビュー
 
-- [Vben Admin](https://vben.pro/) - フルバージョンの中国語サイト
+- [GK ZAP](https://vben.pro/) - フルバージョンの中国語サイト
 
 テストアカウント：vben/123456
 

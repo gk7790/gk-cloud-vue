@@ -1,3 +1,8 @@
+<template>
+  <Drawer title="数据共享示例">
+    <div class="flex-col-center">外部传递数据： {{ data }}</div>
+  </Drawer>
+</template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 
@@ -19,8 +24,3 @@ const [Drawer, drawerApi] = useVbenDrawer({
   },
 });
 </script>
-<template>
-  <Drawer title="数据共享示例">
-    <div class="flex-col-center">外部传递数据： {{ data }}</div>
-  </Drawer>
-</template>

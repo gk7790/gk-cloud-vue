@@ -1,3 +1,19 @@
+<template>
+  <div class="vp-raw w-full">
+    <Grid>
+      <template #action="{ row }">
+        <template v-if="hasEditStatus(row)">
+          <Button type="link" @click="saveRowEvent(row)">保存</Button>
+          <Button type="link" @click="cancelRowEvent(row)">取消</Button>
+        </template>
+        <template v-else>
+          <Button type="link" @click="editRowEvent(row)">编辑</Button>
+        </template>
+      </template>
+    </Grid>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
@@ -74,19 +90,3 @@ const cancelRowEvent = (_row: RowType) => {
   gridApi.grid?.clearEdit();
 };
 </script>
-
-<template>
-  <div class="vp-raw w-full">
-    <Grid>
-      <template #action="{ row }">
-        <template v-if="hasEditStatus(row)">
-          <Button type="link" @click="saveRowEvent(row)">保存</Button>
-          <Button type="link" @click="cancelRowEvent(row)">取消</Button>
-        </template>
-        <template v-else>
-          <Button type="link" @click="editRowEvent(row)">编辑</Button>
-        </template>
-      </template>
-    </Grid>
-  </div>
-</template>

@@ -1,3 +1,9 @@
+<template>
+  <ConfigProvider :theme="tokenTheme">
+    <Layout />
+  </ConfigProvider>
+</template>
+
 <script lang="ts" setup>
 import {
   computed,
@@ -81,12 +87,6 @@ const tokenTheme = computed(() => {
   };
 });
 </script>
-
-<template>
-  <ConfigProvider :theme="tokenTheme">
-    <Layout />
-  </ConfigProvider>
-</template>
 
 <style>
 .medium-zoom-overlay,

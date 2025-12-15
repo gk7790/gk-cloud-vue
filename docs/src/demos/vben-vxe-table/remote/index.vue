@@ -1,3 +1,18 @@
+<template>
+  <div class="vp-raw w-full">
+    <Grid>
+      <template #toolbar-tools>
+        <Button class="mr-2" type="primary" @click="() => gridApi.query()">
+          刷新当前页面
+        </Button>
+        <Button type="primary" @click="() => gridApi.reload()">
+          刷新并返回第一页
+        </Button>
+      </template>
+    </Grid>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import type { DemoTableApi } from '../mock-api';
 
@@ -95,18 +110,3 @@ const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions,
 });
 </script>
-
-<template>
-  <div class="vp-raw w-full">
-    <Grid>
-      <template #toolbar-tools>
-        <Button class="mr-2" type="primary" @click="() => gridApi.query()">
-          刷新当前页面
-        </Button>
-        <Button type="primary" @click="() => gridApi.reload()">
-          刷新并返回第一页
-        </Button>
-      </template>
-    </Grid>
-  </div>
-</template>

@@ -87,20 +87,19 @@
   },
 
   "files.exclude": {
-    "**/.eslintcache": true,
-    "**/bower_components": true,
-    "**/.turbo": true,
-    "**/.idea": true,
-    "**/.vitepress": true,
-    "**/tmp": true,
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.stylelintcache": true,
     "**/.DS_Store": true,
-    "**/vite.config.mts.*": true,
-    "**/tea.yaml": true
+    "**/.eslintcache": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.idea": true,
+    "**/.stylelintcache": true,
+    "**/.svn": true,
+    "**/.turbo": true,
+    "**/bower_components": true,
+    "**/CVS": true,
+    "**/tea.yaml": true,
+    "**/tmp": true,
+    "**/vite.config.mts.*": true
   },
   "files.watcherExclude": {
     "**/.git/objects/**": true,

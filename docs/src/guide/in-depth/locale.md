@@ -64,7 +64,7 @@ updateLocale('en-US');
 ```json
 {
   "about": {
-    "desc": "Vben Admin 是一个现代的管理模版。"
+    "desc": "GK ZAP 是一个现代的管理模版。"
   }
 }
 ````
@@ -75,7 +75,7 @@ updateLocale('en-US');
 ```json
 {
   "about": {
-    "desc": "Vben Admin is a modern management template."
+    "desc": "GK ZAP is a modern management template."
   }
 }
 ````

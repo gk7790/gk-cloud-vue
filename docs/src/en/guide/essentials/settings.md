@@ -31,7 +31,7 @@ The rules are consistent with [Vite Env Variables and Modes](https://vitejs.dev/
 
 ```bash [.env]
 # Application title
-VITE_APP_TITLE=Vben Admin
+VITE_APP_TITLE=GK ZAP
 
 # Application namespace, used as a prefix for caching, store, etc., to ensure isolation
 VITE_APP_NAMESPACE=vben-web-antd
@@ -224,7 +224,7 @@ const defaultPreferences: Preferences = {
     layout: 'sidebar-nav',
     locale: 'zh-CN',
     loginExpiredMode: 'page',
-    name: 'Vben Admin',
+    name: 'GK ZAP',
     preferencesButtonPosition: 'auto',
     watermark: false,
     zIndex: 200,

@@ -1,6 +1,3 @@
-<script lang="ts" setup>
-import { VbenCountToAnimator } from '@vben/common-ui';
-</script>
 <template>
   <VbenCountToAnimator
     :duration="3000"
@@ -10,3 +7,6 @@ import { VbenCountToAnimator } from '@vben/common-ui';
     separator="/"
   />
 </template>
+<script lang="ts" setup>
+import { VbenCountToAnimator } from '@vben/common-ui';
+</script>

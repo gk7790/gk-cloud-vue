@@ -1,3 +1,28 @@
+<template>
+  <Tabs v-model="activeTab" :default-value="getDefaultValue">
+    <TabsList
+      :style="tabsStyle"
+      class="bg-accent !outline-heavy relative grid w-full !outline !outline-2"
+    >
+      <TabsIndicator :style="tabsIndicatorStyle" />
+      <template v-for="tab in tabs" :key="tab.value">
+        <TabsTrigger
+          :value="tab.value"
+          :class="activeClass(tab.value)"
+          class="hover:text-primary z-20 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium disabled:pointer-events-none disabled:opacity-50"
+        >
+          {{ tab.label }}
+        </TabsTrigger>
+      </template>
+    </TabsList>
+    <template v-for="tab in tabs" :key="tab.value">
+      <TabsContent :value="tab.value">
+        <slot :name="tab.value"></slot>
+      </TabsContent>
+    </template>
+  </Tabs>
+</template>
+
 <script setup lang="ts">
 import type { SegmentedItem } from './types';
 
@@ -40,28 +65,3 @@ function activeClass(tab: string): string[] {
   return tab === activeTab.value ? ['!font-bold', 'text-primary'] : [];
 }
 </script>
-
-<template>
-  <Tabs v-model="activeTab" :default-value="getDefaultValue">
-    <TabsList
-      :style="tabsStyle"
-      class="bg-accent !outline-heavy relative grid w-full !outline !outline-2"
-    >
-      <TabsIndicator :style="tabsIndicatorStyle" />
-      <template v-for="tab in tabs" :key="tab.value">
-        <TabsTrigger
-          :value="tab.value"
-          :class="activeClass(tab.value)"
-          class="hover:text-primary z-20 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium disabled:pointer-events-none disabled:opacity-50"
-        >
-          {{ tab.label }}
-        </TabsTrigger>
-      </template>
-    </TabsList>
-    <template v-for="tab in tabs" :key="tab.value">
-      <TabsContent :value="tab.value">
-        <slot :name="tab.value"></slot>
-      </TabsContent>
-    </template>
-  </Tabs>
-</template>

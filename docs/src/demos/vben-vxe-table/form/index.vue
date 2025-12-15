@@ -1,3 +1,9 @@
+<template>
+  <div class="vp-raw w-full">
+    <Grid />
+  </div>
+</template>
+
 <script lang="ts" setup>
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
@@ -119,9 +125,3 @@ const gridOptions: VxeGridProps<RowType> = {
 
 const [Grid] = useVbenVxeGrid({ formOptions, gridOptions });
 </script>
-
-<template>
-  <div class="vp-raw w-full">
-    <Grid />
-  </div>
-</template>

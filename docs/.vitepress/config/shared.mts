@@ -20,7 +20,6 @@ import {
 } from 'vitepress-plugin-group-icons';
 
 import { demoPreviewPlugin } from './plugins/demo-preview';
-import { search as zhSearch } from './zh.mts';
 
 export const shared = defineConfig({
   appearance: 'dark',
@@ -36,20 +35,12 @@ export const shared = defineConfig({
   themeConfig: {
     i18nRouting: true,
     logo: 'https://unpkg.com/@vbenjs/static-source@0.1.7/source/logo-v1.webp',
-    search: {
-      options: {
-        locales: {
-          ...zhSearch,
-        },
-      },
-      provider: 'local',
-    },
-    siteTitle: 'Vben Admin',
+    siteTitle: 'GK ZAP',
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vbenjs/vue-vben-admin' },
     ],
   },
-  title: 'Vben Admin',
+  title: 'GK ZAP',
   vite: {
     build: {
       chunkSizeWarningLimit: Infinity,
@@ -144,7 +135,7 @@ function pwa(): PwaOptions {
     includeManifestIcons: false,
     manifest: {
       description:
-        'Vben Admin is a modern admin dashboard template based on Vue 3. ',
+        'GK ZAP is a modern admin dashboard template based on Vue 3. ',
       icons: [
         {
           sizes: '192x192',
@@ -158,7 +149,7 @@ function pwa(): PwaOptions {
         },
       ],
       id: '/',
-      name: 'Vben Admin Doc',
+      name: 'GK ZAP Doc',
       short_name: 'vben_admin_doc',
       theme_color: '#ffffff',
     },

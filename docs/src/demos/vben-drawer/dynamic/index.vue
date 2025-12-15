@@ -1,3 +1,14 @@
+<template>
+  <div>
+    <Drawer />
+
+    <VbenButton @click="open">Open</VbenButton>
+    <VbenButton class="ml-2" type="primary" @click="handleUpdateTitle">
+      从外部修改标题并打开
+    </VbenButton>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import { useVbenDrawer, VbenButton } from '@vben/common-ui';
 
@@ -16,14 +27,3 @@ function handleUpdateTitle() {
   drawerApi.setState({ title: '外部动态标题' }).open();
 }
 </script>
-
-<template>
-  <div>
-    <Drawer />
-
-    <VbenButton @click="open">Open</VbenButton>
-    <VbenButton class="ml-2" type="primary" @click="handleUpdateTitle">
-      从外部修改标题并打开
-    </VbenButton>
-  </div>
-</template>

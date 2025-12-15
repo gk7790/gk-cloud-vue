@@ -1,3 +1,19 @@
+<template>
+  <Modal title="自动计算高度">
+    <div
+      v-for="item in list"
+      :key="item"
+      class="even:bg-heavy bg-muted flex-center h-[220px] w-full"
+    >
+      {{ item }}
+    </div>
+    <template #prepend-footer>
+      <VbenButton type="link" @click="handleUpdate(6)">
+        点击更新数据
+      </VbenButton>
+    </template>
+  </Modal>
+</template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 
@@ -27,19 +43,3 @@ function handleUpdate(len: number) {
   }, 2000);
 }
 </script>
-<template>
-  <Modal title="自动计算高度">
-    <div
-      v-for="item in list"
-      :key="item"
-      class="even:bg-heavy bg-muted flex-center h-[220px] w-full"
-    >
-      {{ item }}
-    </div>
-    <template #prepend-footer>
-      <VbenButton type="link" @click="handleUpdate(6)">
-        点击更新数据
-      </VbenButton>
-    </template>
-  </Modal>
-</template>

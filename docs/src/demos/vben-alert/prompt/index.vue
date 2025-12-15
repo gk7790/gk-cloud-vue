@@ -1,3 +1,11 @@
+<template>
+  <div class="flex gap-4">
+    <VbenButton @click="showPrompt">Prompt</VbenButton>
+    <VbenButton @click="showSlotsPrompt"> Prompt With slots </VbenButton>
+    <VbenButton @click="showSelectPrompt">Prompt With Select</VbenButton>
+    <VbenButton @click="showAsyncPrompt">Prompt With Async</VbenButton>
+  </div>
+</template>
 <script lang="ts" setup>
 import { h } from 'vue';
 
@@ -108,11 +116,3 @@ function showAsyncPrompt() {
   });
 }
 </script>
-<template>
-  <div class="flex gap-4">
-    <VbenButton @click="showPrompt">Prompt</VbenButton>
-    <VbenButton @click="showSlotsPrompt"> Prompt With slots </VbenButton>
-    <VbenButton @click="showSelectPrompt">Prompt With Select</VbenButton>
-    <VbenButton @click="showAsyncPrompt">Prompt With Async</VbenButton>
-  </div>
-</template>

@@ -1,3 +1,15 @@
+<template>
+  <Modal>
+    <div class="flex-col-center">
+      <VbenButton class="mb-3" type="primary" @click="handleUpdateTitle()">
+        内部动态修改标题
+      </VbenButton>
+      <VbenButton class="mb-3" @click="handleToggleFullscreen()">
+        {{ state.fullscreen ? '退出全屏' : '打开全屏' }}
+      </VbenButton>
+    </div>
+  </Modal>
+</template>
 <script lang="ts" setup>
 import { useVbenModal, VbenButton } from '@vben/common-ui';
 
@@ -24,15 +36,3 @@ function handleToggleFullscreen() {
   });
 }
 </script>
-<template>
-  <Modal>
-    <div class="flex-col-center">
-      <VbenButton class="mb-3" type="primary" @click="handleUpdateTitle()">
-        内部动态修改标题
-      </VbenButton>
-      <VbenButton class="mb-3" @click="handleToggleFullscreen()">
-        {{ state.fullscreen ? '退出全屏' : '打开全屏' }}
-      </VbenButton>
-    </div>
-  </Modal>
-</template>

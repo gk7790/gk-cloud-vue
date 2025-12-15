@@ -1,3 +1,9 @@
+<template>
+  <div class="vp-raw h-[500px] w-full">
+    <Grid />
+  </div>
+</template>
+
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
@@ -56,9 +62,3 @@ onMounted(() => {
   loadList(1000);
 });
 </script>
-
-<template>
-  <div class="vp-raw h-[500px] w-full">
-    <Grid />
-  </div>
-</template>

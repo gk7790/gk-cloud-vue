@@ -1,3 +1,16 @@
+<template>
+  <div class="vp-raw h-[300px] w-full">
+    <Grid>
+      <template #toolbar-tools>
+        <Button class="mr-2" type="primary" @click="expandAll">
+          展开全部
+        </Button>
+        <Button type="primary" @click="collapseAll"> 折叠全部 </Button>
+      </template>
+    </Grid>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
@@ -65,16 +78,3 @@ const collapseAll = () => {
   gridApi.grid?.setAllTreeExpand(false);
 };
 </script>
-
-<template>
-  <div class="vp-raw h-[300px] w-full">
-    <Grid>
-      <template #toolbar-tools>
-        <Button class="mr-2" type="primary" @click="expandAll">
-          展开全部
-        </Button>
-        <Button type="primary" @click="collapseAll"> 折叠全部 </Button>
-      </template>
-    </Grid>
-  </div>
-</template>

@@ -1,3 +1,7 @@
+<template>
+  <QueryForm />
+</template>
+
 <script lang="ts" setup>
 import { message } from 'ant-design-vue';
 
@@ -88,7 +92,3 @@ function onSubmit(values: Record<string, any>) {
   });
 }
 </script>
-
-<template>
-  <QueryForm />
-</template>

@@ -1,3 +1,11 @@
+<template>
+  <Form>
+    <template #field3="slotProps">
+      <Input placeholder="请输入" v-bind="slotProps" />
+    </template>
+  </Form>
+</template>
+
 <script lang="ts" setup>
 import { h } from 'vue';
 
@@ -58,11 +66,3 @@ function onSubmit(values: Record<string, any>) {
   });
 }
 </script>
-
-<template>
-  <Form>
-    <template #field3="slotProps">
-      <Input placeholder="请输入" v-bind="slotProps" />
-    </template>
-  </Form>
-</template>

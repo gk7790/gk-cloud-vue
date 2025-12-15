@@ -1,3 +1,11 @@
+<template>
+  <div>
+    <Drawer />
+
+    <VbenButton @click="open">Open</VbenButton>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import { useVbenDrawer, VbenButton } from '@vben/common-ui';
 
@@ -17,11 +25,3 @@ function open() {
     .open();
 }
 </script>
-
-<template>
-  <div>
-    <Drawer />
-
-    <VbenButton @click="open">Open</VbenButton>
-  </div>
-</template>

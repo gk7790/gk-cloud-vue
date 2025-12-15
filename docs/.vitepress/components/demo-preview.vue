@@ -1,23 +1,3 @@
-<script setup lang="ts">
-import { computed } from 'vue';
-
-import PreviewGroup from './preview-group.vue';
-
-interface Props {
-  files?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), { files: '() => []' });
-
-const parsedFiles = computed(() => {
-  try {
-    return JSON.parse(decodeURIComponent(props.files ?? ''));
-  } catch {
-    return [];
-  }
-});
-</script>
-
 <template>
   <div class="border-border shadow-float relative rounded-xl border">
     <div
@@ -43,3 +23,23 @@ const parsedFiles = computed(() => {
     </PreviewGroup>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+
+import PreviewGroup from './preview-group.vue';
+
+interface Props {
+  files?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), { files: '() => []' });
+
+const parsedFiles = computed(() => {
+  try {
+    return JSON.parse(decodeURIComponent(props.files ?? ''));
+  } catch {
+    return [];
+  }
+});
+</script>

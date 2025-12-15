@@ -1,3 +1,13 @@
+<template>
+  <ApiComponent
+    :api="fetchApi"
+    :component="Cascader"
+    :immediate="false"
+    children-field="children"
+    loading-slot="suffixIcon"
+    visible-event="onDropdownVisibleChange"
+  />
+</template>
 <script lang="ts" setup>
 import { ApiComponent } from '@vben/common-ui';
 
@@ -88,13 +98,3 @@ function fetchApi(): Promise<Record<string, any>> {
   });
 }
 </script>
-<template>
-  <ApiComponent
-    :api="fetchApi"
-    :component="Cascader"
-    :immediate="false"
-    children-field="children"
-    loading-slot="suffixIcon"
-    visible-event="onDropdownVisibleChange"
-  />
-</template>
