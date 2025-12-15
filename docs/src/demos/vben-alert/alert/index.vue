@@ -1,3 +1,10 @@
+<template>
+  <div class="flex gap-4">
+    <VbenButton @click="showAlert">Alert</VbenButton>
+    <VbenButton @click="showIconAlert">Alert With Icon</VbenButton>
+    <VbenButton @click="showCustomAlert">Alert With Custom Content</VbenButton>
+  </div>
+</template>
 <script lang="ts" setup>
 import { h } from 'vue';
 
@@ -27,10 +34,3 @@ function showCustomAlert() {
   });
 }
 </script>
-<template>
-  <div class="flex gap-4">
-    <VbenButton @click="showAlert">Alert</VbenButton>
-    <VbenButton @click="showIconAlert">Alert With Icon</VbenButton>
-    <VbenButton @click="showCustomAlert">Alert With Custom Content</VbenButton>
-  </div>
-</template>

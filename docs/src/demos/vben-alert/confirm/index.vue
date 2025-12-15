@@ -1,3 +1,11 @@
+<template>
+  <div class="flex gap-4">
+    <VbenButton @click="showConfirm">Confirm</VbenButton>
+    <VbenButton @click="showIconConfirm">Confirm With Icon</VbenButton>
+    <VbenButton @click="showfooterConfirm">Confirm With Footer</VbenButton>
+    <VbenButton @click="showAsyncConfirm">Async Confirm</VbenButton>
+  </div>
+</template>
 <script lang="ts" setup>
 import { h, ref } from 'vue';
 
@@ -65,11 +73,3 @@ function showAsyncConfirm() {
   });
 }
 </script>
-<template>
-  <div class="flex gap-4">
-    <VbenButton @click="showConfirm">Confirm</VbenButton>
-    <VbenButton @click="showIconConfirm">Confirm With Icon</VbenButton>
-    <VbenButton @click="showfooterConfirm">Confirm With Footer</VbenButton>
-    <VbenButton @click="showAsyncConfirm">Async Confirm</VbenButton>
-  </div>
-</template>

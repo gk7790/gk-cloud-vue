@@ -1,12 +1,12 @@
 {
-  "name": "@vben/web-naive",
+  "name": "@vben/web-admin",
   "version": "5.5.9",
   "homepage": "https://vben.pro",
   "bugs": "https://github.com/vbenjs/vue-vben-admin/issues",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vbenjs/vue-vben-admin.git",
-    "directory": "apps/web-naive"
+    "directory": "apps/web-admin"
   },
   "license": "MIT",
   "author": {
