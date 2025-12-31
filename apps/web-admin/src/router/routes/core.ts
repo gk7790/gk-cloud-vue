@@ -74,6 +74,14 @@ const coreRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        name: 'adminLogin',
+        path: 'admin/login',
+        component: () => import('#/views/_core/authentication/login.vue'),
+        meta: {
+          title: $t('page.auth.login'),
+        },
+      },
+      {
         name: 'ForgetPassword',
         path: 'forget-password',
         component: () =>

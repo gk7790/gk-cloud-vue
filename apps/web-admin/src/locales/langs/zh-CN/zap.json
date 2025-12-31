@@ -1,0 +1,17 @@
+{
+  "client": {
+    "code": "编码",
+    "list": "客户端列表",
+    "name": "名称",
+    "protocol": "协议",
+    "secret": "秘钥",
+    "title": "客户端"
+  },
+  "protocol": "协议",
+  "tunnel": {
+    "clientName": "客户端名称",
+    "localAddr": "本地IP",
+    "localPort": "端口",
+    "title": "隧道"
+  }
+}

@@ -10,5 +10,8 @@
   "status": "状态",
   "title": "标题",
   "type": "类型",
-  "value": "值"
+  "value": "值",
+  "duration": "耗时",
+  "createdAt": "创建时间",
+  "time": "时间"
 }

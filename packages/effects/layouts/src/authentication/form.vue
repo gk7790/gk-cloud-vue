@@ -1,13 +1,3 @@
-<script setup lang="ts">
-defineOptions({
-  name: 'AuthenticationFormView',
-});
-
-defineProps<{
-  dataSide?: 'bottom' | 'left' | 'right' | 'top';
-}>();
-</script>
-
 <template>
   <div
     class="flex-col-center dark:bg-background-deep bg-background relative px-6 py-10 lg:flex-initial lg:px-8"
@@ -36,3 +26,13 @@ defineProps<{
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+defineOptions({
+  name: 'AuthenticationFormView',
+});
+
+defineProps<{
+  dataSide?: 'bottom' | 'left' | 'right' | 'top';
+}>();
+</script>

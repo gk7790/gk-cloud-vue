@@ -7,6 +7,8 @@ import type * as monacoType from 'monaco-editor';
 
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
+import { preferences } from '@vben/preferences';
+
 import loader from '@monaco-editor/loader';
 
 interface EditorOptions {
@@ -19,7 +21,6 @@ interface EditorOptions {
 const props = defineProps({
   modelValue: { type: String, default: '' },
   language: { type: String, default: 'json' },
-  theme: { type: String, default: 'vs-dark' },
   readOnly: { type: Boolean, default: false },
   options: { type: Object as () => EditorOptions, default: () => ({}) },
   autoFormat: { type: Boolean, default: true }, // 是否自动格式化
@@ -36,7 +37,7 @@ onMounted(async () => {
   editor = monaco.editor.create(editorRef.value!, {
     value: props.modelValue,
     language: props.language,
-    theme: props.theme,
+    theme: preferences.theme.mode === 'dark' ? 'vs-dark' : 'vs',
     readOnly: props.readOnly,
     lineNumbers: 'off',
     automaticLayout: true,

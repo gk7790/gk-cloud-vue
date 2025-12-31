@@ -55,7 +55,7 @@ const schema: VbenFormSchema[] = [
     componentProps: {
       api: getMenuList,
       class: 'w-full',
-      labelField: 'name',
+      labelField: 'title',
       valueField: 'id',
       childrenField: 'children',
       showSearch: true,

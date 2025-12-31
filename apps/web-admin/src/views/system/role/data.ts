@@ -114,6 +114,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
         type: 'datetimerange',
         format: 'yyyy-MM-dd HH:mm',
         clearable: true,
+        defaultTime: ['00:00:00', '23:59:59'],
       },
       fieldName: 'createTime',
       label: $t('system.role.createTime'),

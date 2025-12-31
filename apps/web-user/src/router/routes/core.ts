@@ -1,12 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router';
 
 import { LOGIN_PATH } from '@vben/constants';
-import { preferences } from '@vben/preferences';
 
 import { $t } from '#/locales';
 
 const BasicLayout = () => import('#/layouts/basic.vue');
 const AuthPageLayout = () => import('#/layouts/auth.vue');
+const PublicLayout = () => import('#/public/index.vue');
+
 /** 全局404页面 */
 const fallbackNotFoundRoute: RouteRecordRaw = {
   component: () => import('#/views/_core/fallback/not-found.vue'),
@@ -22,21 +23,51 @@ const fallbackNotFoundRoute: RouteRecordRaw = {
 
 /** 基本路由，这些路由是必须存在的 */
 const coreRoutes: RouteRecordRaw[] = [
-  /**
-   * 根路由
-   * 使用基础布局，作为所有页面的父级容器，子级就不必配置BasicLayout。
-   * 此路由必须存在，且不应修改
-   */
   {
     component: BasicLayout,
+    name: 'zap',
+    path: '/',
+    redirect: '/home',
+    children: [],
+  },
+  {
+    component: PublicLayout,
     meta: {
       hideInBreadcrumb: true,
+      ignoreAccess: true,
       title: 'Root',
     },
     name: 'Root',
-    path: '/',
-    redirect: preferences.app.defaultHomePath,
-    children: [],
+    path: '/home',
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('#/public/index.vue'),
+        meta: {
+          title: '官网首页',
+          ignoreAccess: true,
+        },
+      },
+      {
+        path: '/features',
+        name: 'Features',
+        component: () => import('#/public/features.vue'),
+        meta: {
+          title: '产品功能',
+          ignoreAccess: true,
+        },
+      },
+      {
+        path: '/pricing',
+        name: 'Pricing',
+        component: () => import('#/public/pricing.vue'),
+        meta: {
+          title: '价格方案',
+          ignoreAccess: true,
+        },
+      },
+    ],
   },
   {
     component: AuthPageLayout,
@@ -94,4 +125,4 @@ const coreRoutes: RouteRecordRaw[] = [
   },
 ];
 
-export { coreRoutes, fallbackNotFoundRoute };
+export { coreRoutes, fallbackNotFoundRoute, publicRoutes };

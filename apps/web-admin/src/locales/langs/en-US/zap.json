@@ -1,0 +1,17 @@
+{
+  "client": {
+    "code": "Code",
+    "list": "Control List",
+    "name": "Name",
+    "protocol": "Protocol",
+    "secret": "Secret",
+    "title": "Control"
+  },
+  "protocol": "Protocol",
+  "tunnel": {
+    "clientName": "Client Name",
+    "localAddr": "Local Addr",
+    "localPort": "Port",
+    "title": "Tunnel"
+  }
+}

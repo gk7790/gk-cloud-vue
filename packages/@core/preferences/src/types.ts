@@ -75,6 +75,8 @@ interface AppPreferences {
   name: string;
   /** 偏好设置按钮位置 */
   preferencesButtonPosition: PreferencesButtonPositionType;
+  /** 项目类型 */
+  type: number;
   /**
    * @zh_CN 是否开启水印
    */

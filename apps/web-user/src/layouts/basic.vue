@@ -5,7 +5,7 @@
         :avatar
         :menus
         :text="userStore.userInfo?.nickname"
-        description="ann.vben@gmail.com"
+        description="gyh7790@gmail.com"
         tag-text="Pro"
         @logout="handleLogout"
       />

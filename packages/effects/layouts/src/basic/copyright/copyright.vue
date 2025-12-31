@@ -39,7 +39,7 @@ defineOptions({
 });
 
 withDefaults(defineProps<Props>(), {
-  companyName: 'Gk Admin',
+  companyName: 'Gk ZAP',
   companySiteLink: '',
   date: '2024',
   icp: '',

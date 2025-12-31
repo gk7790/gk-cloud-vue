@@ -10,5 +10,8 @@
   "status": "Status",
   "title": "Title",
   "type": "Type",
-  "value": "Value"
+  "value": "Value",
+  "duration": "Duration",
+  "createdAt": "Created At",
+  "time": "Time"
 }

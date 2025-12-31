@@ -20,6 +20,15 @@
     "title": "Dict",
     "type": "Dict Type"
   },
+  "job": {
+    "logList": "Log List",
+    "execute": "Execute",
+    "parms": "Parms",
+    "pause": "Pause",
+    "resume": "Resume",
+    "title": "Job",
+    "result": "Result"
+  },
   "menu": {
     "activeIcon": "Active Icon",
     "activePath": "Active Path",
