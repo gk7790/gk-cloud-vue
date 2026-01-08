@@ -91,14 +91,10 @@ function onEdit(row: SysRoleApi.SysRole) {
 }
 
 function onDelete(row: SysRoleApi.SysRole) {
-  deleteRole(row.id)
-    .then(() => {
-      message.success($t('ui.actionMessage.deleteSuccess', [row.name]));
-      onRefresh();
-    })
-    .catch(() => {
-      message.error($t('ui.actionMessage.operationFailed'));
-    });
+  deleteRole(row.id).then(() => {
+    message.success($t('ui.actionMessage.deleteSuccess', [row.name]));
+    onRefresh();
+  });
 }
 
 function onRefresh() {

@@ -37,10 +37,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { SysDictApi } from './api';
-
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
+import type { SysDictApi } from '#/api/system/dict';
 
 import { h, ref } from 'vue';
 
@@ -50,8 +49,8 @@ import { $t } from '@vben/locales';
 import { NButton, NPopconfirm, NSpace, useMessage } from 'naive-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { deleteDictType, getDictTypeList } from '#/api/system/dict';
 
-import { deleteDictType, getDictTypeList } from './api';
 import ConfigDrawer from './modules/config.vue';
 import Form from './modules/from.vue';
 

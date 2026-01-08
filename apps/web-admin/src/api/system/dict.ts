@@ -27,6 +27,14 @@ export namespace SysDictApi {
  * 获取字典列表数据
  * sys/dict/type/page
  */
+export async function getDictList(dictType: string) {
+  return requestClient.get(`/sys/dict/type/${dictType}`);
+}
+
+/**
+ * 获取字典列表数据
+ * sys/dict/type/page
+ */
 export async function getDictTypeList(params: Recordable<any>) {
   return requestClient.get<Array<SysDictApi.SysDictType>>(
     '/sys/dict/type/page',

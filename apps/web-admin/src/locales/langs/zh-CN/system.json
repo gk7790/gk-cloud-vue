@@ -11,6 +11,9 @@
     "status": "状态",
     "title": "部门管理"
   },
+  "dev": {
+    "generate": "生成代码"
+  },
   "dict": {
     "createTime": "创建时间",
     "name": "字典名称",
@@ -23,12 +26,13 @@
   },
   "job": {
     "execute": "执行",
+    "jobId": "任务Id",
     "logList": "日志列表",
     "parms": "参数",
     "pause": "暂停",
+    "result": "结果",
     "resume": "恢复",
-    "title": "任务",
-    "result": "结果"
+    "title": "任务"
   },
   "menu": {
     "activeIcon": "激活图标",
@@ -72,6 +76,7 @@
     "typeMenu": "菜单"
   },
   "role": {
+    "auth": "授权标识",
     "createTime": "创建时间",
     "id": "角色ID",
     "list": "角色列表",
@@ -85,6 +90,9 @@
     "status": "状态",
     "title": "角色管理"
   },
+  "table": {
+    "title": "表"
+  },
   "user": {
     "nickname": "昵称",
     "realName": "真实名称",
@@ -93,5 +101,10 @@
     "tenant": "租户",
     "title": "用户",
     "username": "账户"
+  },
+  "zap": {
+    "table": {
+      "title": "表"
+    }
   }
 }

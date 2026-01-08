@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { SysDictApi } from '../api';
+import type { SysDictApi } from '#/api/system/dict';
 
 import { computed, ref } from 'vue';
 
@@ -14,9 +14,8 @@ import { useVbenModal } from '@vben/common-ui';
 import { useMessage } from 'naive-ui';
 
 import { useVbenForm } from '#/adapter/form';
+import { postDictType, putDictType } from '#/api/system/dict';
 import { $t } from '#/locales';
-
-import { postDictType, putDictType } from '../api';
 
 const formData = ref();
 const getTitle = computed(() => {

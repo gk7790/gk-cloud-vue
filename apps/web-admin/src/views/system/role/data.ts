@@ -12,6 +12,12 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
+      component: 'Input',
+      fieldName: 'auth',
+      label: $t('system.role.auth'),
+      rules: 'required',
+    },
+    {
       component: 'RadioGroup',
       componentProps: {
         isButton: true,
@@ -82,6 +88,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       component: 'Input',
+      fieldName: 'auth',
+      label: $t('system.role.auth'),
+    },
+    {
+      component: 'Input',
       fieldName: 'name',
       label: $t('system.role.roleName'),
     },
@@ -124,6 +135,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
 
 export function useColumns(): VxeTableGridOptions['columns'] {
   return [
+    {
+      field: 'auth',
+      title: $t('system.role.auth'),
+      width: 200,
+    },
     {
       field: 'name',
       title: $t('system.role.roleName'),

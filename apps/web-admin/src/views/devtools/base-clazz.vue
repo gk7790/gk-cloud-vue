@@ -1,7 +1,7 @@
 <template>
   <Page auto-content-height>
     <FormModal @success="refreshGrid" />
-    <Grid :table-title="$t('zap.tunnel.title')">
+    <Grid>
       <template #action="{ row }">
         <NSpace justify="center">
           <NButton text type="info" @click="onEdit(row)">
@@ -13,15 +13,17 @@
                 {{ $t('common.delete') }}
               </NButton>
             </template>
-            {{ $t('ui.actionMessage.deleteConfirm', [row.name]) }}
+            {{ $t('ui.actionMessage.deleteConfirm', [row.tableName]) }}
           </NPopconfirm>
         </NSpace>
       </template>
       <!-- ✅ 工具栏插槽 -->
-      <template #toolbar-tools>
-        <NButton type="primary" size="small" @click="onAdd()">
-          {{ $t('common.create') }}
-        </NButton>
+      <template #toolbarButtons>
+        <NSpace justify="center">
+          <NButton type="primary" size="small" @click="onForm()">
+            {{ $t('common.create') }}
+          </NButton>
+        </NSpace>
       </template>
     </Grid>
   </Page>
@@ -29,37 +31,28 @@
 
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { Label } from '#/api/core/core';
-import type { ZapProxiesApi } from '#/api/zap/tunnel';
-
-import { onMounted, ref } from 'vue';
+import type { SysDveApi } from '#/api/system/devtools';
 
 import { Page, useVbenModal } from '@vben/common-ui';
 
 import { NButton, NPopconfirm, NSpace, useMessage } from 'naive-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getClientDict } from '#/api/zap/client';
-import { deleteProxies, getProxiesList } from '#/api/zap/tunnel';
+import { deleteBaseClass, getBaseClass } from '#/api/system/devtools';
 import { $t } from '#/locales';
 
-import { useColumns } from './data';
-import Form from './modules/form.vue';
+import FormClazz from './modules/form-clazz.vue';
 
 const message = useMessage();
 
 const [FormModal, formModalApi] = useVbenModal({
-  connectedComponent: Form,
+  connectedComponent: FormClazz,
   destroyOnClose: true,
 });
 
-const clientDict = ref<Label[]>([]);
-
-onMounted(() => {
-  getClientDict().then((resp) => {
-    clientDict.value = resp;
-  });
-});
+function onForm() {
+  formModalApi.setData({}).open();
+}
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
@@ -75,36 +68,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
       {
         component: 'Input',
         componentProps: {
-          placeholder: $t('zap.client.code'),
+          placeholder: '表名',
           clearable: true,
         },
         fieldName: 'code',
-      },
-      {
-        component: 'Input',
-        componentProps: {
-          placeholder: $t('zap.client.name'),
-          clearable: true,
-        },
-        fieldName: 'name',
-      },
-      {
-        component: 'Select',
-        componentProps: () => ({
-          placeholder: $t('ui.formRules.selectRequired', [
-            $t('zap.client.title'),
-          ]),
-          isButton: true,
-          buttonStyle: 'solid',
-          options: clientDict.value.map((v) => ({
-            value: v.id,
-            label: v.label,
-          })),
-          optionType: 'button',
-          class: `[&_.n-radio-button]:py-1`,
-          clearable: true,
-        }),
-        fieldName: 'clientId',
       },
     ],
     submitButtonOptions: {
@@ -128,7 +95,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
       highlight: true,
       labelField: 'name',
     },
-    columns: useColumns(clientDict),
+    columns: [
+      { field: 'code', title: '编码' },
+      { field: 'packageName', title: '基类包名' },
+      { field: 'fields', title: '基类字段' },
+      { field: 'remark', title: '备注' },
+      { field: 'createdAt', title: $t('core.createdAt') },
+      { slots: { default: 'action' }, title: $t('core.operation') },
+    ],
     keepSource: true,
     proxyConfig: {
       ajax: {
@@ -136,7 +110,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
           { page }: { page: { currentPage: number; pageSize: number } },
           formValues: Record<string, any>,
         ) => {
-          return await getProxiesList({
+          return await getBaseClass({
             page: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
@@ -157,12 +131,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
         buttons: 'toolbarButtons',
       },
     },
-  } as unknown as VxeTableGridOptions<ZapProxiesApi.ZapProxies>,
+  } as unknown as VxeTableGridOptions<SysDveApi.SysTable>,
 });
-
-function onAdd() {
-  formModalApi.setData({}).open();
-}
 
 /**
  * 刷新表格
@@ -176,9 +146,14 @@ function onEdit(row: any) {
 }
 
 function deleteHandle(row: any) {
-  deleteProxies({ id: row.id }).then(() => {
-    message.success($t('ui.actionMessage.deleteSuccess', [row.dictName]));
-    gridApi.query();
-  });
+  deleteBaseClass({ id: row.id })
+    .then(() => {
+      message.success($t('ui.actionMessage.deleteSuccess', [row.dictName]));
+      gridApi.query();
+    })
+    .catch((error) => {
+      message.error(error);
+      message.error(`$t('ui.actionMessage.operationFailed')`);
+    });
 }
 </script>

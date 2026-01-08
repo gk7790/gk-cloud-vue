@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import type { FormRules } from 'naive-ui';
 
-import type { SysDictApi } from '../api';
+import type { SysDictApi } from '#/api/system/dict';
 
 import { computed, ref } from 'vue';
 

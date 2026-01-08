@@ -10,6 +10,9 @@
     "status": "Status",
     "title": "Department Management"
   },
+  "dev": {
+    "generate": "Generate Code"
+  },
   "dict": {
     "createTime": "Create Time",
     "name": "Dict Name",
@@ -21,13 +24,14 @@
     "type": "Dict Type"
   },
   "job": {
-    "logList": "Log List",
     "execute": "Execute",
+    "jobId": "Job Id",
+    "logList": "Log List",
     "parms": "Parms",
     "pause": "Pause",
+    "result": "Result",
     "resume": "Resume",
-    "title": "Job",
-    "result": "Result"
+    "title": "Job"
   },
   "menu": {
     "activeIcon": "Active Icon",
@@ -70,6 +74,7 @@
     "typeMenu": "Menu"
   },
   "role": {
+    "auth": "Auth",
     "createTime": "Creation Time",
     "id": "Role ID",
     "list": "Role List",
@@ -81,6 +86,9 @@
     "roleName": "Role Name",
     "status": "Status",
     "title": "Role Management"
+  },
+  "table": {
+    "title": "Table"
   },
   "user": {
     "nickname": "Nickname",

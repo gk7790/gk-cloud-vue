@@ -83,14 +83,9 @@ function onEdit(row: any) {
 }
 
 function deleteHandle(row: any) {
-  deleteClient({ id: row.id })
-    .then(() => {
-      message.success($t('ui.actionMessage.deleteSuccess', [row.dictName]));
-      gridApi.query();
-    })
-    .catch((error) => {
-      message.error(error);
-      message.error(`$t('ui.actionMessage.operationFailed')`);
-    });
+  deleteClient({ id: row.id }).then(() => {
+    message.success($t('ui.actionMessage.deleteSuccess', [row.dictName]));
+    gridApi.query();
+  });
 }
 </script>

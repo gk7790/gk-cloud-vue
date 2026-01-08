@@ -1,11 +1,16 @@
 <template>
   <Page auto-content-height>
     <FormModal @success="refreshGrid" />
-    <Grid :table-title="$t('zap.tunnel.title')">
+    <ImportModal @success="refreshGrid" />
+    <GenModal @success="refreshGrid" />
+    <Grid>
       <template #action="{ row }">
         <NSpace justify="center">
           <NButton text type="info" @click="onEdit(row)">
             {{ $t('common.edit') }}
+          </NButton>
+          <NButton text type="info" @click="onGen(row)">
+            {{ $t('system.dev.generate') }}
           </NButton>
           <NPopconfirm @positive-click="deleteHandle(row)">
             <template #trigger>
@@ -13,15 +18,17 @@
                 {{ $t('common.delete') }}
               </NButton>
             </template>
-            {{ $t('ui.actionMessage.deleteConfirm', [row.name]) }}
+            {{ $t('ui.actionMessage.deleteConfirm', [row.tableName]) }}
           </NPopconfirm>
         </NSpace>
       </template>
       <!-- ✅ 工具栏插槽 -->
-      <template #toolbar-tools>
-        <NButton type="primary" size="small" @click="onAdd()">
-          {{ $t('common.create') }}
-        </NButton>
+      <template #toolbarButtons>
+        <NSpace justify="center">
+          <NButton type="primary" size="small" @click="onImport()">
+            导入数据库表
+          </NButton>
+        </NSpace>
       </template>
     </Grid>
   </Page>
@@ -29,22 +36,20 @@
 
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { Label } from '#/api/core/core';
-import type { ZapProxiesApi } from '#/api/zap/tunnel';
-
-import { onMounted, ref } from 'vue';
+import type { SysDveApi } from '#/api/system/devtools';
 
 import { Page, useVbenModal } from '@vben/common-ui';
 
 import { NButton, NPopconfirm, NSpace, useMessage } from 'naive-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getClientDict } from '#/api/zap/client';
-import { deleteProxies, getProxiesList } from '#/api/zap/tunnel';
+import { deleteTable, getTablePage } from '#/api/system/devtools';
 import { $t } from '#/locales';
 
 import { useColumns } from './data';
+import FormImport from './modules/form-import.vue';
 import Form from './modules/form.vue';
+import FormGen from './modules/from-gen.vue';
 
 const message = useMessage();
 
@@ -53,13 +58,27 @@ const [FormModal, formModalApi] = useVbenModal({
   destroyOnClose: true,
 });
 
-const clientDict = ref<Label[]>([]);
-
-onMounted(() => {
-  getClientDict().then((resp) => {
-    clientDict.value = resp;
-  });
+const [GenModal, genModalApi] = useVbenModal({
+  connectedComponent: FormGen,
+  destroyOnClose: true,
 });
+
+const [ImportModal, importModalApi] = useVbenModal({
+  connectedComponent: FormImport,
+  destroyOnClose: true,
+});
+
+function onEdit(row: any) {
+  formModalApi.setData(row).open();
+}
+
+function onGen(row: any) {
+  genModalApi.setData(row).open();
+}
+
+function onImport() {
+  importModalApi.setData({}).open();
+}
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
@@ -75,36 +94,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
       {
         component: 'Input',
         componentProps: {
-          placeholder: $t('zap.client.code'),
+          placeholder: '表名',
           clearable: true,
         },
-        fieldName: 'code',
-      },
-      {
-        component: 'Input',
-        componentProps: {
-          placeholder: $t('zap.client.name'),
-          clearable: true,
-        },
-        fieldName: 'name',
-      },
-      {
-        component: 'Select',
-        componentProps: () => ({
-          placeholder: $t('ui.formRules.selectRequired', [
-            $t('zap.client.title'),
-          ]),
-          isButton: true,
-          buttonStyle: 'solid',
-          options: clientDict.value.map((v) => ({
-            value: v.id,
-            label: v.label,
-          })),
-          optionType: 'button',
-          class: `[&_.n-radio-button]:py-1`,
-          clearable: true,
-        }),
-        fieldName: 'clientId',
+        fieldName: 'tableName',
       },
     ],
     submitButtonOptions: {
@@ -128,7 +121,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       highlight: true,
       labelField: 'name',
     },
-    columns: useColumns(clientDict),
+    columns: useColumns(),
     keepSource: true,
     proxyConfig: {
       ajax: {
@@ -136,7 +129,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
           { page }: { page: { currentPage: number; pageSize: number } },
           formValues: Record<string, any>,
         ) => {
-          return await getProxiesList({
+          return await getTablePage({
             page: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
@@ -157,12 +150,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
         buttons: 'toolbarButtons',
       },
     },
-  } as unknown as VxeTableGridOptions<ZapProxiesApi.ZapProxies>,
+  } as unknown as VxeTableGridOptions<SysDveApi.SysTable>,
 });
-
-function onAdd() {
-  formModalApi.setData({}).open();
-}
 
 /**
  * 刷新表格
@@ -171,14 +160,15 @@ function refreshGrid() {
   gridApi.query();
 }
 
-function onEdit(row: any) {
-  formModalApi.setData(row).open();
-}
-
 function deleteHandle(row: any) {
-  deleteProxies({ id: row.id }).then(() => {
-    message.success($t('ui.actionMessage.deleteSuccess', [row.dictName]));
-    gridApi.query();
-  });
+  deleteTable({ ids: row.id })
+    .then(() => {
+      message.success($t('ui.actionMessage.deleteSuccess', [row.dictName]));
+      gridApi.query();
+    })
+    .catch((error) => {
+      message.error(error);
+      message.error(`$t('ui.actionMessage.operationFailed')`);
+    });
 }
 </script>

@@ -42,7 +42,7 @@ const logHeader = ref('');
 const logContent = ref('');
 
 const formOptions: VbenFormProps = {
-  wrapperClass: 'grid-cols-2',
+  wrapperClass: 'grid-cols-3',
   showCollapseButton: false,
   compact: true,
   actionLayout: 'inline',
@@ -52,6 +52,15 @@ const formOptions: VbenFormProps = {
     labelWidth: 1,
   },
   schema: [
+    {
+      component: 'Input',
+      componentProps: {
+        placeholder: $t('system.job.jobId'),
+        size: 'small',
+        clearable: true,
+      },
+      fieldName: 'jobId',
+    },
     {
       component: 'Input',
       componentProps: {

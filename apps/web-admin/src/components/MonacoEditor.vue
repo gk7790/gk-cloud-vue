@@ -1,5 +1,13 @@
 <template>
-  <div ref="editorRef" class="monaco-editor-container"></div>
+  <div
+    ref="editorRef"
+    class="monaco-editor-container monaco-wrapper"
+    :style="{
+      minHeight: `${minHeight}px`,
+      maxHeight: `${maxHeight}px`,
+      height: `${height}px`,
+    }"
+  ></div>
 </template>
 
 <script setup lang="ts">
@@ -24,6 +32,9 @@ const props = defineProps({
   readOnly: { type: Boolean, default: false },
   options: { type: Object as () => EditorOptions, default: () => ({}) },
   autoFormat: { type: Boolean, default: true }, // 是否自动格式化
+  height: { type: Number, default: 400 },
+  minHeight: { type: Number, default: 400 },
+  maxHeight: { type: Number, default: 600 },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -42,6 +53,11 @@ onMounted(async () => {
     lineNumbers: 'off',
     automaticLayout: true,
     minimap: { enabled: false },
+    scrollBeyondLastLine: false,
+    scrollbar: {
+      vertical: 'hidden',
+      horizontal: 'auto',
+    },
     ...props.options,
   });
 
@@ -75,12 +91,18 @@ watch(
 </script>
 
 <style scoped>
+.monaco-wrapper {
+  width: 100%;
+  height: 100%;
+  resize: vertical;
+  overflow: auto;
+  border-radius: 8px;
+}
 .monaco-editor-container {
   width: 100%;
   height: 100%;
-  min-height: 200px; /* 默认高度 */
   border-radius: 8px; /* 圆角 */
-  border: 1px solid #ccc; /* 边框 */
   overflow: hidden; /* 防止内容溢出圆角 */
+  border: 1px solid #ccc;
 }
 </style>

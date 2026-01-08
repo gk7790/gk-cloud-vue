@@ -29,10 +29,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { SysDictApi } from '../api';
-
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
+import type { SysDictApi } from '#/api/system/dict';
 
 import { h, reactive, ref, watch } from 'vue';
 

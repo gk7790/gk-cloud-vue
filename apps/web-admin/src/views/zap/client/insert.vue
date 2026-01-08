@@ -1,6 +1,5 @@
 <template>
   <Page auto-content-height>
-    <FormModal @success="refreshGrid" />
     <NCard :title="$t('zap.client.title')">
       <BaseForm />
     </NCard>
@@ -87,14 +86,9 @@ const [BaseForm, formApi] = useVbenForm({
 });
 
 function onSubmit(values: Record<string, any>) {
-  postClient(values)
-    .then(() => {
-      message.success($t('ui.actionMessage.operationSuccess'));
-      formApi.resetForm();
-    })
-    .catch((error) => {
-      message.error(error);
-      message.error(`$t('ui.actionMessage.operationFailed')`);
-    });
+  postClient(values).then(() => {
+    message.success($t('ui.actionMessage.operationSuccess'));
+    formApi.resetForm();
+  });
 }
 </script>
