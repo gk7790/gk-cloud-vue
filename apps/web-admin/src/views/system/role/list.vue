@@ -47,6 +47,12 @@ const [FormDrawer, formDrawerApi] = useVbenDrawer({
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
+    wrapperClass: 'grid-cols-6',
+    showCollapseButton: false,
+    commonConfig: {
+      hideLabel: true,
+      labelWidth: 1,
+    },
     fieldMappingTime: [
       [
         'createTime',

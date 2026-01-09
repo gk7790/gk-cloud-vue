@@ -75,9 +75,9 @@ function handleAdd() {
 }
 
 const formOptions: VbenFormProps = {
-  wrapperClass: 'grid-cols-2',
   showCollapseButton: false,
   compact: true,
+  wrapperClass: 'grid-cols-4',
   actionLayout: 'inline',
   actionPosition: 'right',
   commonConfig: {

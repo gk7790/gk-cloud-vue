@@ -85,15 +85,10 @@ function refreshGrid() {
 const message = useMessage();
 
 function deleteHandle(row: any) {
-  deleteTenant({ id: row.id })
-    .then(() => {
-      message.success($t('ui.actionMessage.deleteSuccess', [row.dictName]));
-      gridApi.query();
-    })
-    .catch((error) => {
-      message.error(error);
-      message.error(`$t('ui.actionMessage.operationFailed')`);
-    });
+  deleteTenant({ id: row.id }).then(() => {
+    message.success($t('ui.actionMessage.deleteSuccess', [row.dictName]));
+    gridApi.query();
+  });
 }
 
 function handleAdd() {

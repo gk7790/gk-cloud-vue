@@ -89,14 +89,23 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'auth',
+      componentProps: {
+        placeholder: $t('system.role.auth'),
+        size: 'small',
+        clearable: true,
+      },
       label: $t('system.role.auth'),
     },
     {
       component: 'Input',
       fieldName: 'name',
       label: $t('system.role.roleName'),
+      componentProps: {
+        placeholder: $t('system.role.roleName'),
+        size: 'small',
+        clearable: true,
+      },
     },
-    { component: 'Input', fieldName: 'id', label: $t('system.role.id') },
     {
       component: 'Select',
       componentProps: {
@@ -117,6 +126,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'remark',
+      componentProps: {
+        placeholder: $t('system.role.remark'),
+        size: 'small',
+        clearable: true,
+      },
       label: $t('system.role.remark'),
     },
     {
